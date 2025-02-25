@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Shayne ❤️</title>
+    <style>
+        :root {
+            --primary: #7e57c2;
+            --primary-light: #b085f5;
+            --secondary: #f06292;
+            --dark: #424242;
+            --light: #f5f5f5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .tab-container {
+            display: flex;
+            background: var(--primary-light);
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .tab.active {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .content.active {
+            display: block;
+        }
+        
+        /* Breathing exercise */
+        .breathing-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin: 20px 0;
+            transition: transform 4s ease-in-out, background-color 4s;
+        }
+        
+        .expand {
+            transform: scale(1.5);
+            background: var(--secondary);
+        }
+        
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 10px 0;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: var(--primary-light);
+        }
+        
+        /* Todo list */
+        #todoForm {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        #todoInput {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            font-size: 1rem;
+        }
+        
+        #todoSubmit {
+            border-radius: 0 5px 5px 0;
+            margin: 0;
+        }
+        
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            animation: fadeIn 0.5s;
+        }
+        
+        .todo-item.completed {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        
+        .todo-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        .delete-btn {
+            margin-left: auto;
+            background: var(--secondary);
+            padding: 5px 10px;
+        }
+        
+        /* Countdown timer */
+        .timer-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .countdown {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 20px 0;
+            color: var(--primary);
+        }
+        
+        /* Dog care section */
+        .medication-item {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .medication-time {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .notes-textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 1rem;
+            resize: vertical;
+        }
+        
+        /* Positive messages */
+        .message-container {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .message {
+            font-size: 1.4rem;
+            margin: 20px 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Media queries for responsiveness */
+        @media (max-width: 600px) {
+            .tab {
+                padding: 10px 5px;
+                font-size: 0.9rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .circle {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Shayne's Digital Care Package</h1>
+            <p>A little something to help you through tough days ❤️</p>
+        </header>
+        
+        <div class="tab-container">
+            <div class="tab active" data-tab="breathe">Breathe</div>
+            <div class="tab" data-tab="todo">Task Helper</div>
+            <div class="tab" data-tab="dogcare">Dog Care</div>
+            <div class="tab" data-tab="together">Together</div>
+            <div class="tab" data-tab="messages">Messages</div>
+        </div>
+        
+        <!-- Breathing Exercise -->
+        <div class="content active" id="breathe">
+            <h2>Take a Moment for Yourself</h2>
+            <p>When things get overwhelming, try this quick breathing exercise:</p>
+            
+            <div class="breathing-container">
+                <div class="circle" id="breathingCircle">Breathe</div>
+                <button id="startBreathing">Start Breathing Exercise</button>
+            </div>
+            
+            <p>Remember: It's okay to take breaks. You're doing an amazing job balancing everything.</p>
+        </div>
+        
+        <!-- Todo List -->
+        <div class="content" id="todo">
+            <h2>Simple Task Manager</h2>
+            <p>Break down your day into manageable tasks:</p>
+            
+            <form id="todoForm">
+                <input type="text" id="todoInput" placeholder="Add a new task...">
+                <button type="submit" id="todoSubmit">Add</button>
+            </form>
+            
+            <div id="todoList"></div>
+            
+            <div style="margin-top: 20px;">
+                <button id="clearCompleted">Clear Completed</button>
+                <span id="taskCount" style="margin-left: 10px; font-size: 0.9rem;"></span>
+            </div>
+        </div>
+        
+        <!-- Dog Care -->
+        <div class="content" id="dogcare">
+            <h2>Dog Care Tracker</h2>
+            <p>Keep track of your pup's medications and treatments:</p>
+            
+            <div id="medicationList">
+                <!-- Medication items will be added here -->
+            </div>
+            
+            <form id="medicationForm" style="margin-top: 20px;">
+                <input type="text" id="medName" placeholder="Medication name" style="padding: 10px; width: 100%; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                <input type="time" id="medTime" style="padding: 10px; width: 100%; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                <button type="submit" style="width: 100%;">Add Medication Reminder</button>
+            </form>
+            
+            <div style="margin-top: 20px;">
+                <h3>Treatment Notes</h3>
+                <textarea id="dogNotes" class="notes-textarea" placeholder="Keep notes about treatments, symptoms, or vet advice here..."></textarea>
+                <button id="saveNotes">Save Notes</button>
+            </div>
+        </div>
+        
+        <!-- Countdown to Together -->
+        <div class="content" id="together">
+            <h2>Our Next Meeting</h2>
+            <p>Looking forward to seeing you again ❤️</p>
+            
+            <div class="timer-container">
+                <div class="countdown" id="countdown">Set your date below</div>
+                <input type="datetime-local" id="meetingDate" style="padding: 10px; width: 100%; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                <button id="setDate">Set Date</button>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h3>Things I Can't Wait To Do Together</h3>
+                <textarea id="togetherNotes" class="notes-textarea" placeholder="Add activities or plans for when we're together..."></textarea>
+                <button id="saveTogether">Save Plans</button>
+            </div>
+        </div>
+        
+        <!-- Positive Messages -->
+        <div class="content" id="messages">
+            <h2>Daily Pick-Me-Ups</h2>
+            <p>A little positivity whenever you need it:</p>
+            
+            <div class="message-container">
+                <div class="message" id="message">Click below for a message</div>
+                <button id="newMessage">Give Me a Message</button>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h3>Personal Messages</h3>
+                <div id="customMessages"></div>
+                <div style="margin-top: 20px;">
+                    <input type="text" id="customMessageInput" placeholder="Add a personal message..." style="padding: 10px; width: 70%; border: 1px solid #ddd; border-radius: 5px;">
+                    <button id="addCustomMessage" style="width: 28%; margin-left: 2%;">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+        
+        // Breathing exercise
+        const breathingCircle = document.getElementById('breathingCircle');
+        const startBreathingBtn = document.getElementById('startBreathing');
+        let isBreathing = false;
+        let breathingInterval;
+        
+        startBreathingBtn.addEventListener('click', () => {
+            if (isBreathing) {
+                clearInterval(breathingInterval);
+                breathingCircle.classList.remove('expand');
+                breathingCircle.textContent = 'Breathe';
+                startBreathingBtn.textContent = 'Start Breathing Exercise';
+                isBreathing = false;
+                return;
+            }
+            
+            isBreathing = true;
+            startBreathingBtn.textContent = 'Stop Breathing Exercise';
+            
+            let phase = 'inhale';
+            breathingCircle.textContent = 'Inhale...';
+            breathingCircle.classList.add('expand');
+            
+            breathingInterval = setInterval(() => {
+                if (phase === 'inhale') {
+                    phase = 'exhale';
+                    breathingCircle.textContent = 'Exhale...';
+                    breathingCircle.classList.remove('expand');
+                } else {
+                    phase = 'inhale';
+                    breathingCircle.textContent = 'Inhale...';
+                    breathingCircle.classList.add('expand');
+                }
+            }, 4000); // 4 seconds per phase
+        });
+        
+        // Todo list functionality
+        const todoForm = document.getElementById('todoForm');
+        const todoInput = document.getElementById('todoInput');
+        const todoList = document.getElementById('todoList');
+        const clearCompletedBtn = document.getElementById('clearCompleted');
+        const taskCount = document.getElementById('taskCount');
+        
+        // Load todos from localStorage
+        let todos = JSON.parse(localStorage.getItem('shaynesTodos')) || [];
+        
+        function updateTodoList() {
+            todoList.innerHTML = '';
+            
+            todos.forEach((todo, index) => {
+                const todoItem = document.createElement('div');
+                todoItem.classList.add('todo-item');
+                if (todo.completed) todoItem.classList.add('completed');
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = todo.completed;
+                checkbox.addEventListener('change', () => {
+                    todos[index].completed = !todos[index].completed;
+                    localStorage.setItem('shaynesTodos', JSON.stringify(todos));
+                    updateTodoList();
+                });
+                
+                const todoText = document.createElement('span');
+                todoText.textContent = todo.text;
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('delete-btn');
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.addEventListener('click', () => {
+                    todos.splice(index, 1);
+                    localStorage.setItem('shaynesTodos', JSON.stringify(todos));
+                    updateTodoList();
+                });
+                
+                todoItem.appendChild(checkbox);
+                todoItem.appendChild(todoText);
+                todoItem.appendChild(deleteBtn);
+                todoList.appendChild(todoItem);
+            });
+            
+            // Update task count
+            const remaining = todos.filter(todo => !todo.completed).length;
+            taskCount.textContent = `${remaining} task${remaining !== 1 ? 's' : ''} remaining`;
+        }
+        
+        // Initial render
+        updateTodoList();
+        
+        // Add new todo
+        todoForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = todoInput.value.trim();
+            if (text) {
+                todos.push({ text, completed: false });
+                localStorage.setItem('shaynesTodos', JSON.stringify(todos));
+                todoInput.value = '';
+                updateTodoList();
+            }
+        });
+        
+        // Clear completed todos
+        clearCompletedBtn.addEventListener('click', () => {
+            todos = todos.filter(todo => !todo.completed);
+            localStorage.setItem('shaynesTodos', JSON.stringify(todos));
+            updateTodoList();
+        });
+        
+        // Dog care functionality
+        const medicationForm = document.getElementById('medicationForm');
+        const medicationList = document.getElementById('medicationList');
+        const dogNotes = document.getElementById('dogNotes');
+        const saveNotesBtn = document.getElementById('saveNotes');
+        
+        // Load medications and notes from localStorage
+        let medications = JSON.parse(localStorage.getItem('shaynesMedications')) || [];
+        dogNotes.value = localStorage.getItem('shaynesDogNotes') || '';
+        
+        function updateMedicationList() {
+            medicationList.innerHTML = '';
+            
+            medications.forEach((med, index) => {
+                const medItem = document.createElement('div');
+                medItem.classList.add('medication-item');
+                
+                const medName = document.createElement('div');
+                medName.textContent = med.name;
+                medName.style.fontWeight = 'bold';
+                
+                const medTime = document.createElement('div');
+                medTime.classList.add('medication-time');
+                medTime.textContent = `Time: ${med.time}`;
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('delete-btn');
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.style.marginTop = '10px';
+                deleteBtn.addEventListener('click', () => {
+                    medications.splice(index, 1);
+                    localStorage.setItem('shaynesMedications', JSON.stringify(medications));
+                    updateMedicationList();
+                });
+                
+                medItem.appendChild(medName);
+                medItem.appendChild(medTime);
+                medItem.appendChild(deleteBtn);
+                medicationList.appendChild(medItem);
+            });
+        }
+        
+        // Initial render
+        updateMedicationList();
+        
+        // Add new medication
+        medicationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('medName').value.trim();
+            const time = document.getElementById('medTime').value;
+            
+            if (name && time) {
+                medications.push({ name, time });
+                localStorage.setItem('shaynesMedications', JSON.stringify(medications));
+                document.getElementById('medName').value = '';
+                document.getElementById('medTime').value = '';
+                updateMedicationList();
+            }
+        });
+        
+        // Save dog notes
+        saveNotesBtn.addEventListener('click', () => {
+            localStorage.setItem('shaynesDogNotes', dogNotes.value);
+            alert('Notes saved successfully!');
+        });
+        
+        // Countdown timer functionality
+        const meetingDateInput = document.getElementById('meetingDate');
+        const setDateBtn = document.getElementById('setDate');
+        const countdownEl = document.getElementById('countdown');
+        const togetherNotes = document.getElementById('togetherNotes');
+        const saveTogetherBtn = document.getElementById('saveTogether');
+        
+        // Load meeting date and notes from localStorage
+        let meetingDate = localStorage.getItem('shaynesMeetingDate') || '';
+        togetherNotes.value = localStorage.getItem('shaynesTogetherNotes') || '';
+        
+        if (meetingDate) {
+            meetingDateInput.value = meetingDate.slice(0, 16); // Format for datetime-local
+            updateCountdown();
+        }
+        
+        // Set meeting date
+        setDateBtn.addEventListener('click', () => {
+            meetingDate = meetingDateInput.value;
+            localStorage.setItem('shaynesMeetingDate', meetingDate);
+            updateCountdown();
+        });
+        
+        // Update countdown
+        function updateCountdown() {
+            if (!meetingDate) return;
+            
+            const now = new Date().getTime();
+            const meetingTime = new Date(meetingDate).getTime();
+            const distance = meetingTime - now;
+            
+            if (distance < 0) {
+                countdownEl.textContent = "It's time to meet!";
+                return;
+            }
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            
+            countdownEl.textContent = `${days} days, ${hours} hours, ${minutes} minutes`;
+        }
+        
+        // Update countdown every minute
+        setInterval(updateCountdown, 60000);
+        updateCountdown(); // Initial update
+        
+        // Save together notes
+        saveTogetherBtn.addEventListener('click', () => {
+            localStorage.setItem('shaynesTogetherNotes', togetherNotes.value);
+            alert('Plans saved successfully!');
+        });
+        
+        // Positive messages functionality
+        const messages = [
+            "You're incredibly strong. I'm so proud of you.",
+            "Taking care of yourself is important too. You matter.",
+            "Your dog is lucky to have such a dedicated owner.",
+            "Distance is just a number - my heart is always with you.",
+            "You're handling so much right now, and you're doing amazingly.",
+            "I love your resilience and kindness.",
+            "Every day we get through is one day closer to being together.",
+            "Your strength inspires me every single day.",
+            "It's okay to take breaks - you deserve them.",
+            "I'm always here for you, even when we're apart.",
+            "You make everything in my life better just by being you.",
+            "I believe in you, today and always.",
+            "Your love makes every challenge worthwhile.",
+            "Remember to breathe - this tough time will pass.",
+            "I admire how you care for everyone around you.",
+            "You're not alone in this - we're a team.",
+            "Your smile brightens my entire world.",
+            "The distance is temporary, our love is permanent.",
+            "I'm counting the days until I can hug you again.",
+            "You're doing your best, and that's more than enough."
+        ];
+        
+        const messageEl = document.getElementById('message');
+        const newMessageBtn = document.getElementById('newMessage');
+        const customMessages = document.getElementById('customMessages');
+        const customMessageInput = document.getElementById('customMessageInput');
+        const addCustomMessageBtn = document.getElementById('addCustomMessage');
+        
+        // Load custom messages from localStorage
+        let personalMessages = JSON.parse(localStorage.getItem('shaynesPersonalMessages')) || [];
+        
+        function updateCustomMessages() {
+            customMessages.innerHTML = '';
+            
+            personalMessages.forEach((msg, index) => {
+                const msgEl = document.createElement('div');
+                msgEl.classList.add('medication-item');
+                msgEl.style.cursor = 'pointer';
+                msgEl.textContent = msg;
+                
+                msgEl.addEventListener('click', () => {
+                    messageEl.textContent = msg;
+                });
+                
+                customMessages.appendChild(msgEl);
+            });
+        }
+        
+        // Initial render
+        updateCustomMessages();
+        
+        // Show random message
+        newMessageBtn.addEventListener('click', () => {
+            const randomIndex = Math.floor(Math.random() * messages.length);
+            messageEl.textContent = messages[randomIndex];
+        });
+        
+        // Add custom message
+        addCustomMessageBtn.addEventListener('click', () => {
+            const message = customMessageInput.value.trim();
+            if (message) {
+                personalMessages.push(message);
+                localStorage.setItem('shaynesPersonalMessages', JSON.stringify(personalMessages));
+                customMessageInput.value = '';
+                updateCustomMessages();
+            }
+        });
+        
+        // Initial message
+        newMessageBtn.click();
+    </script>
+</body>
+</html>
